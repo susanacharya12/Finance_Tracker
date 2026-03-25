@@ -3,23 +3,46 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-# Register Serializer
+
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, min_length=6)
+    password = serializers.CharField(
+        write_only=True,
+        min_length=6,
+        style={'input_type': 'password'}
+    )
 
     class Meta:
         model = User
         fields = ['email', 'username', 'password', 'phone_number', 'profile_picture', 'role']
 
     def create(self, validated_data):
-        user = User(**validated_data)
+        # Create user instance without saving the password in plain text
+        user = User(
+            email=validated_data['email'],
+            username=validated_data.get('username', ''),
+            phone_number=validated_data.get('phone_number', None),
+            profile_picture=validated_data.get('profile_picture', None),
+            role=validated_data.get('role', 'user')
+        )
         user.set_password(validated_data['password'])  # hash password
         user.save()
         return user
 
+# -----------------------------
 # User Serializer (Profile)
+# -----------------------------
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'username', 'phone_number', 'profile_picture', 'role', 'created_at', 'updated_at']
+        fields = [
+            'id',
+            'email',
+            'username',
+            'phone_number',
+            'profile_picture',
+            'role',
+            'created_at',
+            'updated_at'
+        ]
+        # Make read-only fields for profile view
         read_only_fields = ['email', 'role', 'created_at', 'updated_at']
