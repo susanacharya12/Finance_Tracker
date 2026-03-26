@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body { @apply bg-slate-50 text-slate-800 font-sans; }
+
+  ::-webkit-scrollbar              { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track        { background: transparent; }
+  ::-webkit-scrollbar-thumb        { @apply bg-slate-300 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover  { @apply bg-slate-400; }
+}
+
+@layer components {
+
+  /* ── Cards ── */
+  .card {
+    @apply bg-white rounded-2xl border border-slate-100 shadow-card p-6;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-2.5 rounded-xl
+           bg-brand-600 text-white text-sm font-semibold
+           shadow-sm hover:bg-brand-700 active:scale-[.97]
+           transition-all duration-150 disabled:opacity-60 disabled:pointer-events-none;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-2.5 rounded-xl
+           bg-slate-100 text-slate-700 text-sm font-medium
+           hover:bg-slate-200 active:scale-[.97]
+           transition-all duration-150 disabled:opacity-60 disabled:pointer-events-none;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-2.5 rounded-xl
+           bg-rose-500 text-white text-sm font-semibold
+           hover:bg-rose-600 active:scale-[.97]
+           transition-all duration-150 disabled:opacity-60 disabled:pointer-events-none;
+  }
+
+  /* ── Form controls ── */
+  .input {
+    @apply w-full px-3.5 py-2.5 rounded-xl
+           border border-slate-200 bg-white
+           text-sm text-slate-800 placeholder:text-slate-400
+           outline-none focus:ring-2 focus:ring-brand-500/25 focus:border-brand-400
+           transition-all duration-150;
+  }
+  .label {
+    @apply block text-[11px] font-semibold text-slate-500
+           uppercase tracking-widest mb-1.5;
+  }
+
+  /* ── Nav items ── */
+  .nav-item {
+    @apply flex items-center gap-3 px-3.5 py-2.5 rounded-xl
+           text-sm font-medium text-slate-500
+           hover:bg-slate-100 hover:text-slate-800
+           transition-all duration-150 cursor-pointer;
+  }
+  .nav-item-active {
+    @apply bg-brand-50 text-brand-700 hover:bg-brand-50 hover:text-brand-700;
+  }
+
+  /* ── Badges ── */
+  .badge-income {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5
+           rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold;
+  }
+  .badge-expense {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5
+           rounded-full bg-rose-50 text-rose-600 text-xs font-semibold;
+  }
+
+  /* ── Table ── */
+  .table-head {
+    @apply px-4 py-3 text-left text-[11px] font-semibold
+           text-slate-400 uppercase tracking-wider;
+  }
+  .table-cell {
+    @apply px-4 py-3.5 text-sm text-slate-700;
+  }
+}
