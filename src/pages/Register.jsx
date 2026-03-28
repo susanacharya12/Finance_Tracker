@@ -35,8 +35,8 @@ export default function Register() {
         email: form.email,
         password: form.password,
       })
-      setSuccess('Account created! Redirecting to login...')
-      setTimeout(() => navigate('/login'), 1500)
+      setSuccess('Account created! Redirecting to email verification...')
+      setTimeout(() => navigate(`/verify-email?email=${encodeURIComponent(form.email)}`), 1500)
     } catch (err) {
       const data = err.response?.data
       if (data) {

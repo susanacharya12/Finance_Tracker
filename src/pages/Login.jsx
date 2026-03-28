@@ -23,10 +23,12 @@ export default function Login() {
       await login(form.email, form.password)
       navigate('/dashboard')
     } catch (err) {
-      setError(
-        err.response?.data?.detail ||
-        'Invalid credentials. Please try again.'
-      )
+      const detail = err.response?.data?.detail || ''
+      if (detail.includes('No active account')) {
+        setError('__unverified__')
+      } else {
+        setError(detail || 'Invalid credentials. Please try again.')
+      }
     } finally {
       setLoading(false)
     }
@@ -83,11 +85,27 @@ export default function Login() {
             <p className="text-slate-400">Sign in to your account to continue.</p>
           </div>
 
-          {error && (
+          {error === '__unverified__' ? (
+            <div className="mb-6 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 text-sm">
+              Your email is not verified yet.{' '}
+              <Link
+                to={`/verify-email?email=${encodeURIComponent(form.email)}`}
+                className="underline font-medium hover:text-yellow-200"
+              >
+                Verify now
+              </Link>{' '}or{' '}
+              <Link
+                to={`/verify-email?email=${encodeURIComponent(form.email)}`}
+                className="underline font-medium hover:text-yellow-200"
+              >
+                resend OTP
+              </Link>.
+            </div>
+          ) : error ? (
             <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
               {error}
             </div>
-          )}
+          ) : null}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -105,7 +123,15 @@ export default function Login() {
             </div>
 
             <div>
-              <label className="label">Password</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="label">Password</label>
+                <Link
+                  to="/forgot-password"
+                  className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
               <input
                 name="password"
                 type="password"

@@ -114,6 +114,24 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# ── Email Configuration ──────────────────────────────────────────────────────
+# Set EMAIL_BACKEND env var to 'smtp' to use real SMTP, otherwise console is used
+import os
+_email_backend = os.environ.get('EMAIL_BACKEND', 'console')
+
+if _email_backend == 'smtp':
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+else:
+    # Prints emails to the console — perfect for development
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST          = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT          = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS       = True
+EMAIL_HOST_USER     = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL  = os.environ.get('DEFAULT_FROM_EMAIL', 'Finance Tracker <noreply@financetracker.com>')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
