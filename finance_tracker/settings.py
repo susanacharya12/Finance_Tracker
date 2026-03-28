@@ -114,6 +114,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Media files (user uploads — profile pictures, etc.)
+MEDIA_URL  = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # ── Email Configuration ──────────────────────────────────────────────────────
 # Set EMAIL_BACKEND env var to 'smtp' to use real SMTP, otherwise console is used
 import os
