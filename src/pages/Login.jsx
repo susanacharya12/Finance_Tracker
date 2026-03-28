@@ -184,15 +184,6 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Footer links */}
-      <footer className="py-4 px-6 border-t border-slate-800/50">
-        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs text-slate-600">
-          {['About', 'Help', 'Privacy', 'Terms', 'Contact'].map(l => (
-            <span key={l} className="hover:text-slate-400 cursor-pointer transition-colors">{l}</span>
-          ))}
-          <span>© 2026 FinanceTracker</span>
-        </div>
-      </footer>
 
     </div>
   )
