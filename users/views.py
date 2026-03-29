@@ -56,7 +56,9 @@ class UserViewSet(viewsets.ModelViewSet):
         response_data = {
             'detail': 'Registration successful. Please check your email for a 6-digit verification OTP.',
         }
-        if django_settings.DEBUG:
+        # Only expose OTP in response when using console backend (no real email configured)
+        using_console = 'console' in django_settings.EMAIL_BACKEND
+        if django_settings.DEBUG and using_console:
             response_data['otp'] = otp_code
 
         return Response(response_data, status=status.HTTP_201_CREATED)
@@ -218,7 +220,8 @@ class ResendOTPView(APIView):
             )
 
         response_data = {'detail': 'A new OTP has been sent to your email.'}
-        if django_settings.DEBUG:
+        using_console = 'console' in django_settings.EMAIL_BACKEND
+        if django_settings.DEBUG and using_console:
             response_data['otp'] = otp_code
 
         return Response(response_data, status=status.HTTP_200_OK)

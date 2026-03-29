@@ -50,6 +50,16 @@ A full-stack personal finance tracking application with a React + Vite frontend 
 - `/api/categories/` — categories CRUD
 - `/api/transactions/` — transactions CRUD
 
+## Email Configuration
+
+OTP emails (registration verification + password reset) are sent via Gmail SMTP.
+
+- **EMAIL_BACKEND** env var: set to `smtp` to use real Gmail delivery (currently active)
+- **EMAIL_HOST_USER** secret: Gmail address used as sender
+- **EMAIL_HOST_PASSWORD** secret: Gmail App Password (not the regular account password)
+- **EMAIL_HOST**: defaults to `smtp.gmail.com`, port 587 with TLS
+- If `EMAIL_BACKEND` is not `smtp`, falls back to console mode (OTP printed to server logs and auto-filled in the UI when DEBUG=True)
+
 ## Dependencies
 
 ### Python

@@ -134,7 +134,13 @@ EMAIL_PORT          = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_USE_TLS       = True
 EMAIL_HOST_USER     = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL  = os.environ.get('DEFAULT_FROM_EMAIL', 'Finance Tracker <noreply@financetracker.com>')
+# Gmail requires the from address to match the authenticated account
+_from_email = os.environ.get('DEFAULT_FROM_EMAIL', '')
+if not _from_email and EMAIL_HOST_USER:
+    _from_email = f'Finance Tracker <{EMAIL_HOST_USER}>'
+elif not _from_email:
+    _from_email = 'Finance Tracker <noreply@financetracker.com>'
+DEFAULT_FROM_EMAIL  = _from_email
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
